@@ -47,17 +47,19 @@
   "homepage": "https://github.com/yoctore/yocto-atos#readme",
   "dependencies": {
     "joi": "8.0.5",
-    "lodash": "4.11.1",
+    "lodash": "4.13.1",
     "q": "^1.4.1",
     "yocto-logger": "^1.1.6",
     "yocto-utils": "^1.2.8"
   },
   "devDependencies": {
-    "chai": "3.5.0",
     "grunt": "1.0.1",
     "grunt-contrib-uglify": "1.0.1",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "2.4.5",
-    "yocto-hint": "^1.3.7"
+    "yocto-hint": "^1.3.7",
+    "grunt-todo": "^0.5.0",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-clean": "1.0.0"
   }
 }

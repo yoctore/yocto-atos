@@ -5,11 +5,31 @@ module.exports = function (grunt) {
   grunt.initConfig({
     // default package
     pkg       : grunt.file.readJSON('package.json'),
+
+    todo      : {
+      options : {
+        marks       : [
+          { name : 'TODO', pattern : /TODO/, color : 'yellow' },
+          { name : 'FIXME', pattern : /FIXME/, color : 'red' },
+          { name : 'NOTE', pattern : /NOTE/, color : 'blue' }
+        ],
+        file        : 'REPORT.md',
+        githubBoxes : true,
+        colophon    : true,
+        usePackage  : true
+      },
+      src     : [
+        'src/validators/**/*.js',
+        'src/methods/**/*.js'
+      ]
+    },
+
     // hint our app
     yoctohint : {
       options  : {},
       all      : [ 'src/***', 'Gruntfile.js' ]
     },
+
     // Uglify our app
     uglify    : {
       options : {
@@ -24,25 +44,44 @@ module.exports = function (grunt) {
         } ]
       }
     },
-    // unit testing
-    mochaTest : {
-      // Test all unit test
-      all  : {
-        options : {
-          reporter : 'spec',
-        },
-        src     : [ 'test/unit/*.js' ]
+    clean     : {
+      dist        : [ 'dist/*']
+    },
+    // test our app
+    mochacli  : {
+      options : {
+        'reporter'       : 'spec',
+        'inline-diffs'   : false,
+        'no-exit'        : true,
+        'force'          : false,
+        'check-leaks'    : true,
+        'bail'           : false
+      },
+      all     : [ 'tests/unit/*.js' ]
+    },
+    // copy files
+    copy      : {
+      all : {
+        expand  : true,
+        cwd     : 'src/',
+        src     : '**',
+        dest    : 'dist/'
       }
     }
   });
 
-  // Load the plugins
+  // load tasks
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-todo');
   grunt.loadNpmTasks('yocto-hint');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('hint', 'yoctohint');
-  grunt.registerTask('test', 'mochaTest');
-  grunt.registerTask('build', [ 'hint', 'test', 'uglify' ]);
-  grunt.registerTask('default', 'build');
+  // register tasks
+  grunt.registerTask('report', 'todo');
+  grunt.registerTask('hint', [ 'yoctohint' ]);
+  grunt.registerTask('tests', 'mochacli');
+  grunt.registerTask('build', [ 'yoctohint', 'clean:dist', 'copy', 'uglify' ]);
+  grunt.registerTask('default', [ 'tests', 'build' ]);
 };

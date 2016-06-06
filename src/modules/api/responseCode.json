@@ -1,0 +1,170 @@
+{
+  "success" : [
+    {
+      "responseCode" : "00",
+      "description"  : "Transaction approved or processed successfully"
+    }
+  ],
+  "error" : [
+    {
+      "responseCode" : "02",
+      "description"  : "Contact payment mean issuer"
+    },
+    {
+      "responseCode" : "03",
+      "description"  : "Invalid acceptor"
+    },
+    {
+      "responseCode" : "04",
+      "description"  : "Keep the payment mean"
+    },
+    {
+      "responseCode" : "05",
+      "description"  : "Do not honour"
+    },
+    {
+      "responseCode" : "07",
+      "description"  : "Keep the payment mean, special conditions"
+    },
+    {
+      "responseCode" : "08",
+      "description"  : "Approve after identification"
+    },
+    {
+      "responseCode" : "12",
+      "description"  : "Invalid transaction"
+    },
+    {
+      "responseCode" : "13",
+      "description"  : "Invalid amount"
+    },
+    {
+      "responseCode" : "14",
+      "description"  : "Invalid PAN"
+    },
+    {
+      "responseCode" : "15",
+      "description"  : "Unknown payment mean issuer"
+    },
+    {
+      "responseCode" : "17",
+      "description"  : "Payment aborted by the buyer"
+    },
+    {
+      "responseCode" : "24",
+      "description"  : "Operation not authorised"
+    },
+    {
+      "responseCode" : "25",
+      "description"  : "Transaction not found"
+    },
+    {
+      "responseCode" : "30",
+      "description"  : "Format error"
+    },
+    {
+      "responseCode" : "31",
+      "description"  : "Id of the acquiring organisation unknown"
+    },
+    {
+      "responseCode" : "33",
+      "description"  : "payment mean expired"
+    },
+    {
+      "responseCode" : "34",
+      "description"  : "Fraud suspicion"
+    },
+    {
+      "responseCode" : "40",
+      "description"  : "Function not supported"
+    },
+    {
+      "responseCode" : "41",
+      "description"  : "Payment mean lost"
+    },
+    {
+      "responseCode" : "43",
+      "description"  : "Payment mean stolen"
+    },
+    {
+      "responseCode" : "51",
+      "description"  : "Insufficient or exceeded credit 54 Payment mean expired"
+    },
+    {
+      "responseCode" : "56",
+      "description"  : "Payment mean missing from the file"
+    },
+    {
+      "responseCode" : "57",
+      "description"  : "Transaction unauthorised for this payment mean holder"
+    },
+    {
+      "responseCode" : "58",
+      "description"  : "Transaction forbidden to the terminal"
+    },
+    {
+      "responseCode" : "59",
+      "description"  : "Fraud suspicion"
+    },
+    {
+      "responseCode" : "60",
+      "description"  : "The payment mean acceptor must contact the acquirer"
+    },
+    {
+      "responseCode" : "61",
+      "description"  : "Exceeds the amount limit"
+    },
+    {
+      "responseCode" : "62",
+      "description"  : "Transaction awaiting payment confirmation"
+    },
+    {
+      "responseCode" : "63",
+      "description"  : "Security rules not complied with"
+    },
+    {
+      "responseCode" : "68",
+      "description"  : "Response not received or received too late"
+    },
+    {
+      "responseCode" : "65",
+      "description"  : "Allowed number of daily transactions has been exceeded "
+    },
+    {
+      "responseCode" : "75",
+      "description"  : "Exceeded number of PAN attempts"
+    },
+    {
+      "responseCode" : "87",
+      "description"  : "Terminal unknown"
+    },
+    {
+      "responseCode" : "90",
+      "description"  : "System temporarily stopped"
+    },
+    {
+      "responseCode" : "91",
+      "description"  : "Payment mean issuer inaccessible"
+    },
+    {
+      "responseCode" : "94",
+      "description"  : "Duplicated transaction"
+    },
+    {
+      "responseCode" : "96",
+      "description"  : "System malfunction"
+    },
+    {
+      "responseCode" : "97",
+      "description"  : "Request time-out; transaction refused"
+    },
+    {
+      "responseCode" : "98",
+      "description"  : "Server unavailable; network routing requested again"
+    },
+    {
+      "responseCode" : "99",
+      "description"  : "Incident with initiator domain"
+    }
+  ]
+}

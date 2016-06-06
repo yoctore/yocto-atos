@@ -53,6 +53,14 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
   // create async process
   var deferred = Q.defer();
 
+  try {
+    // retrieve response code
+    var responseCode = require('./responseCode.json');
+  } catch (error) {
+    this.logger.warning('[ YoctoAtos.ApiRequest.process ] - the responseCode file was not found' +
+    ' so the error code will not be translate - more details : ' + utils.obj.inspect(error));
+  }
+
   // override value if not defined
   showDataLog = _.isUndefined(showDataLog) ? true : showDataLog;
 
@@ -81,17 +89,30 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
                           'Receiving response with data below :',
                           utils.obj.inspect(body) ].join(' '));
 
-      // FIXME = HANDLE ERROR WITH GIVEN DATA
       // add test to check if all is ok for next process
-      if (!error && response && _.has(response, 'statusCode') && response.statusCode === 200) {
+      if (!error && response && _.has(response, 'statusCode') && response.statusCode === 200 &&
+      body.responseCode === '00') {
+
         // return with correct data
         deferred.resolve(body);
       } else {
-        // normalize error
-        error = error || [
-          response.statusCode     || 'Cannot find request status message',
-          response.statusMessage  || 'Cannot find request message'
-        ].join(' ');
+
+        // check id responseCode was defined
+        if (!_.isUndefined(body) && !_.isUndefined(body.responseCode)) {
+
+          // retrieve the Translation of error code
+          var translateCode = _.find(responseCode.error, { responseCode : body.responseCode });
+
+          // merge the error code
+          error = _.merge(body, _.isUndefined(translateCode) ? {} : translateCode);
+        } else {
+
+          // normalize error
+          error = error || [
+            response.statusCode     || 'Cannot find request status message',
+            response.statusMessage  || 'Cannot find request message',
+          ].join(' ');
+        }
 
         // log message
         this.logger.error([ '[ YoctoAtos.ApiRequest.process ] - Http request error :',
