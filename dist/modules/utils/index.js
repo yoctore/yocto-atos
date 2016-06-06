@@ -1,0 +1,2 @@
+/* yocto-atos - Yocto module to make payment with Atos - Wrapper for Sips Office Json Interface - V0.1.0 */
+"use strict";function Utils(a){this.logger=a}var logger=require("yocto-logger"),crypto=require("crypto"),_=require("lodash");Utils.prototype.calculSEAL=function(a,b){a=_.isObject(a)?JSON.stringify(a):a;var c=crypto.createHmac("sha256",b);return c.update(a),c.digest("hex")},module.exports=function(a){return(_.isUndefined(a)||_.isNull(a))&&(logger.warning("[ Utils.constructor ] - Invalid logger given. Use internal logger"),a=logger),new Utils(a)};

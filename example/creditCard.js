@@ -1,0 +1,34 @@
+var atos = require('../src')();
+
+var config = {
+  mode : 'sandbox',
+  secretKey         : '484GEF87A45AEAA87842634A684A354A643541AA',
+  config : {
+    currencyCode      : '978',
+    interfaceVersion  : 'IR_WS_2.3',
+    keyVersion        : 1,
+    merchantId        : 'foehfaefoiefnelfnefezfef26rz14gzr6g4zr6g4rz65g'
+  }
+};
+
+var paymentData = {
+  amount          : 123,
+  cardNumber      : '559955995599559955',
+  cardExpiryDate  : '200508',
+  s10TransactionReference : {
+    s10TransactionId      : '777888899445566112233',
+    s10TransactionIdDate  : '20050606'
+  }
+};
+
+atos.loadConfig(config).then(function (value) {
+  console.log('===> success load, value is = ')
+
+  atos.modules.creditCard.createAuthorization(paymentData).then(function (value) {
+    console.log('===> success create auth payment, value is = ', value)
+  }).catch(function (error) {
+    console.log('===> error, is = ', error)
+  });
+}).catch(function (error) {
+  console.log('===> error, is = ', error);
+});
