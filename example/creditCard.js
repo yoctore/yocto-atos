@@ -7,14 +7,15 @@ var config = {
     currencyCode      : '978',
     interfaceVersion  : 'IR_WS_2.3',
     keyVersion        : 1,
-    merchantId        : 'foehfaefoiefnelfnefezfef26rz14gzr6g4zr6g4rz65g'
+    merchantId        : '4545121548451215465432165'
   }
 };
 
 var paymentData = {
   amount          : 123,
   cardNumber      : '559955995599559955',
-  cardExpiryDate  : '200508',
+  cardExpiryDate  : '201905',
+  cardCSCValue    : '985',
   s10TransactionReference : {
     s10TransactionId      : '777888899445566112233',
     s10TransactionIdDate  : '20050606'

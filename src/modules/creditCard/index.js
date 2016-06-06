@@ -37,10 +37,11 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
     captureDay              : joi.number().integer().optional().min(0).default(7),
     captureMode             : joi.string().optional().default('VALIDATION'),
     cardNumber              : joi.number().integer().required(),
-    cardExpiryDate          : joi.date().format('YYYYMM').required(),
+    cardExpiryDate          : joi.string().required().empty(),
+    cardCSCValue            : joi.string().required().empty(),
     s10TransactionReference : joi.object().keys({
       s10TransactionId     : joi.string().required().empty(),
-      s10TransactionIdDate : joi.date().format('YYYYMMDD').required()
+      s10TransactionIdDate : joi.string().required().empty(),
     })
   });
 

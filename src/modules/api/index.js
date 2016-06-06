@@ -76,7 +76,6 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
     this.logger.debug([ '[ YoctoAtos.ApiRequest.process ] - Processing a POST request to :',
                          host, 'with data : ', showDataLog ? utils.obj.inspect(data) :
                          'data not allow to be displayed' ].join(' '));
-
     // process request
     request({
       json    : true,
