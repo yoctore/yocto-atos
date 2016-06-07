@@ -30,6 +30,13 @@ var captureData = {
   }
 };
 
+var cancelData = {
+  s10TransactionReference : {
+    s10TransactionId      : '777888899445566112233',
+    s10TransactionIdDate  : '20050606'
+  }
+};
+
 // atos.loadConfig(config).then(function (value) {
 //   console.log('===> success load, value is = ')
 //
@@ -41,11 +48,23 @@ var captureData = {
 // }).catch(function (error) {
 //   console.log('===> error, is = ', error);
 // });
+//
+// atos.loadConfig(config).then(function (value) {
+//   console.log('===> success load, value is = ')
+//
+//   atos.modules.creditCard.capturePayment(captureData).then(function (value) {
+//     console.log('===> success create auth payment, value is = ', value)
+//   }).catch(function (error) {
+//     console.log('===> error, is = ', error)
+//   });
+// }).catch(function (error) {
+//   console.log('===> error, is = ', error);
+// });
 
 atos.loadConfig(config).then(function (value) {
   console.log('===> success load, value is = ')
 
-  atos.modules.creditCard.capturePayment(captureData).then(function (value) {
+  atos.modules.creditCard.cancelPayment(cancelData).then(function (value) {
     console.log('===> success create auth payment, value is = ', value)
   }).catch(function (error) {
     console.log('===> error, is = ', error)
