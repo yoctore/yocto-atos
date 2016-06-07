@@ -83,10 +83,11 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
       uri     : host,
       body    : data
     }, function (error, response, body) {
+
       // log response before validation
       this.logger.debug([ '[ YoctoAtos.ApiRequest.process ] -',
                           'Receiving response with data below :',
-                          utils.obj.inspect(body) ].join(' '));
+                          (!_.isUndefined(body) ? utils.obj.inspect(body) : '') ].join(' '));
 
       // add test to check if all is ok for next process
       if (!error && response && _.has(response, 'statusCode') && response.statusCode === 200 &&

@@ -64,15 +64,72 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
   this.logger.debug('[ YoctoAtos.CreditCard.createAuthorization ] - a new request will' +
   ' be send to create authorization payment');
 
-  api.process(this.config, 'checkout/cardOrder', paymentData,
-  // TODO : set last param to false to not show credit card info
-  'createAuthorization', true).then(function (value) {
+  // Call api module to make an request to atos
+  api.process(this.config, 'checkout/cardOrder', paymentData, 'createAuthorization', false).then(
+  function (value) {
 
     // resolve success
     deferred.resolve(value);
   }).catch(function (error) {
 
     this.logger.error('[ YoctoAtos.CreditCard.createAuthorization.create ] - the' +
+    ' payment was not authorized');
+
+    // reject error
+    deferred.reject(error);
+  }.bind(this));
+
+  // return promise of process
+  return deferred.promise;
+};
+
+/**
+ * Method that capture an existing authorization pauymebt
+ *
+ * @param  {Object} captureData the necessary data to create payment authorization
+ * @return {boolean} true if file is loaded, otherwise false
+ */
+CreditCard.prototype.capturePayment = function (captureData) {
+  // create a promise deferred
+  var deferred = Q.defer();
+
+  // Joi schema for create authorization
+  var schema = joi.object().required().keys({
+    operationAmount         : joi.number().integer().required().min(0),
+    s10TransactionReference : joi.object().keys({
+      s10TransactionId     : joi.string().required().empty(),
+      s10TransactionIdDate : joi.string().required().empty(),
+    })
+  });
+
+  // validate joi schema with the given file
+  var result   = schema.validate(captureData);
+
+  // check if an error occured
+  if (result.error) {
+    // An error occured joi schema is not conform
+    this.logger.error('[ YoctoAtos.CreditCard.capturePayment.joi ] - an error' +
+    ' occured schema is not conform, more details : ' + result.error.toString());
+    // Config file was not loaded
+    deferred.reject(result.error.toString());
+    return deferred.promise;
+  }
+
+  // override var with default value
+  captureData = result.value;
+
+  this.logger.debug('[ YoctoAtos.CreditCard.capturePayment ] - a new request will' +
+  ' be send to create authorization payment');
+
+  // Call api module to make an request to atos to capture payment
+  api.process(this.config, 'cashManagement/validate', captureData, 'capturePayment').then(
+  function (value) {
+
+    // resolve success
+    deferred.resolve(value);
+  }).catch(function (error) {
+
+    this.logger.error('[ YoctoAtos.CreditCard.capturePayment ] - the' +
     ' payment was not authorized');
 
     // reject error
