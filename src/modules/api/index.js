@@ -116,7 +116,7 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
 
         // log message
         this.logger.error([ '[ YoctoAtos.ApiRequest.process ] - Http request error :',
-                            error ].join(' '));
+                            utils.obj.inspect(error) ].join(' '));
         // reject with data
         deferred.reject(error);
       }

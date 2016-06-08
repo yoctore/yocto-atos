@@ -39,10 +39,12 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
     cardNumber              : joi.number().integer().required(),
     cardExpiryDate          : joi.string().required().empty(),
     cardCSCValue            : joi.string().required().empty(),
+    orderId                 : joi.string().optional().empty(),
     s10TransactionReference : joi.object().keys({
       s10TransactionId     : joi.string().required().empty(),
       s10TransactionIdDate : joi.string().required().empty(),
-    })
+    }),
+    fraudData               : joi.object()
   });
 
   // validate joi schema with the given file

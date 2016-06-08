@@ -45,14 +45,21 @@ YoctoAtos.prototype.loadConfig = function (config) {
 
   // joi schema of the config file
   var schema = joi.object().required().keys({
+    // Mode used, this will be determine wich Atos host URL will be used
     mode          : joi.string().required().valid([ 'sandbox', 'live' ]),
+    // Secret key used to calcul SEAL (hash of the message)
     secretKey     : joi.string().required().empty(),
+    // Necessary config that will be send into each request
     config        : joi.object().required().keys({
+      // Currency code for the transaction. This code is ISO 4217 compatible.
       currencyCode     : joi.string().required().valid([ '032', '036', '116', '124', '208',
       '344', '356', '392', '410', '484', '554', '578', '702', '752', '756', '826', '840', '901',
       '949', '952', '953', '978', '986']),
+      // Version value and number of the interface used.
       interfaceVersion : joi.string().required().empty(),
+      // Version of the merchant's secret key used to calculate the imprint of the message
       keyVersion       : joi.number().integer().required().min(1),
+      // Identifier of the shop, this value is provided to the merchant by Sips
       merchantId       : joi.string().required().empty()
     })
   });
