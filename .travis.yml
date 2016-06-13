@@ -1,0 +1,8 @@
+deploy:
+  provider: npm
+  email: technique@yocto.re
+  api_key:
+    secure: V0zSMy05oDh5b6jd6Ihi1Rtm5XVqwbiWofpB0HUF2wU0cc2Q916JA+pRgZPk36RNal9qaFtSQSjzByrIkkdgkgXPIJHV39nHWH0ujDFlvCDegXteR7C+zwMkyMOXnUX+eCRe0X9/ObrlidryKntF6sGllIJgui7FTUs15yFtUPE3a5ojhmnIcywftUPZr6fin9wqYfhsOBxAp9nZzmEXa48kBwMJUY++0bL+dFPtnnA3lW5anvB4ZzRun3iad/KFKA3bEffb4elfHblapSaCAJKq5EzLriLFkaQYYAnWr6j446GAgTw8yRa0WCGCoPZvBzotE/iB69u413vBTALaLLc1V3NJSpT6arcjFIzilVNtkpb0odffKU3oldEnVgdEOb7wbu3R28Q7mmimrBbfigsP7/xFg/uE3rnjda7lwkLp54cIThJGjqtB+SzJ7g8SPz+OAXIW/FaW1+Jz6VbiA0RGdau4TajbDv2CKaUrmWurU7zE47kx+F9w8z715Gyf61JPMPtIhR8+lKLG47jfsfmLqhHaeqCHftyWu/85shlp34tzM0wstKSiYTouePsZ/tj8EE6u6QybdDe+Y6tH0Lkm6g6rihuJsJJYTvDOIKF1wHHEB/2U9ThRI8auw3dnohCowlWn93Al9y1SNBD/FqnFs8dOLTWfANQU8ouHpjw=
+  on:
+    tags: true
+    repo: yoctore/yocto-atos
