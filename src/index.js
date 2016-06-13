@@ -58,9 +58,7 @@ YoctoAtos.prototype.loadConfig = function (config) {
       // Version value and number of the interface used.
       interfaceVersion : joi.string().required().empty(),
       // Version of the merchant's secret key used to calculate the imprint of the message
-      keyVersion       : joi.number().integer().required().min(1),
-      // Identifier of the shop, this value is provided to the merchant by Sips
-      merchantId       : joi.string().required().empty()
+      keyVersion       : joi.string().required()
     })
   });
 

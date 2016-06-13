@@ -1,50 +1,53 @@
 var atos = require('../src')();
 
 var config = {
-  mode : 'sandbox',
-  secretKey         : '484GEF87A45AEAA87842634A684A354A643541AA',
-  config : {
+  mode      : 'sandbox',
+  secretKey : 'yourKey',
+  config    : {
     currencyCode      : '978',
-    interfaceVersion  : 'IR_WS_2.3',
-    keyVersion        : 1,
-    merchantId        : '4545121548451215465432165'
+    interfaceVersion  : 'IR_WS_2.11',
+    keyVersion        : '1'
   }
 };
 
 var paymentData = {
-  amount          : 123,
-  cardNumber      : '559955995599559955',
+  amount          : '123',
+  cardNumber      : '5017670000005900',
   cardExpiryDate  : '201905',
   cardCSCValue    : '985',
-  orderId         : '57358b7fea9d4398641209e5',
-  s10TransactionReference : {
-    s10TransactionId      : '777888899445566112233',
-    s10TransactionIdDate  : '20050606'
-  }
+  orderId         : '575acedaa8fa1f33004254a1',
+  // transactionReference : '575acedaa8fa1f33004254a3',
+  // s10TransactionReference : {
+  //   s10TransactionId      : '156985',
+  //   s10TransactionIdDate  : '20160613'
+  // },
+  merchantId      : '201000007070001'
 };
 
 var captureData = {
-  operationAmount : 100,
+  operationAmount         : '100',
   s10TransactionReference : {
-    s10TransactionId      : '777888899445566112233',
-    s10TransactionIdDate  : '20050606'
-  }
+    s10TransactionId      : '156985',
+    s10TransactionIdDate  : '20160613'
+  },
+  merchantId              : '201000007070001'
 };
 
 var cancelData = {
   s10TransactionReference : {
-    s10TransactionId      : '777888899445566112233',
+    s10TransactionId      : '156985',
     s10TransactionIdDate  : '20050606'
-  }
+  },
+  merchantId              : '201000007070001'
 };
 
 atos.loadConfig(config).then(function (value) {
   console.log('===> success load, value is = ')
 
   atos.modules.creditCard.createAuthorization(paymentData).then(function (value) {
-    console.log('===> success create auth payment, value is = ', value)
+    console.log('\n===> success create auth payment, value is = ', value)
   }).catch(function (error) {
-    console.log('===> error, is = ', error)
+    console.log('\n===> error, is = ', error)
   });
 }).catch(function (error) {
   console.log('===> error, is = ', error);

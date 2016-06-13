@@ -3,6 +3,7 @@
 var logger  = require('yocto-logger');
 var crypto  = require('crypto');
 var _       = require('lodash');
+var utf8    = require('utf8');
 
 /**
  * Yocto Atos : Atos wrapper for Sips Office Json Interface
@@ -31,13 +32,31 @@ function Utils (logger) {
  */
 Utils.prototype.calculSEAL = function (data, secretKey) {
 
-  data = _.isObject(data) ? JSON.stringify(data) : data;
+  var seal = '';
+
+  // omit keys
+  data = _.omit(data, [ 'keyVersion', 'sealAlgorithm' ]);
+
+  // Sort all keys and concat all value of keys to make the seal string
+  _.each(_.sortBy(_.keys(data)), function (k) {
+
+    // check if is object
+    if (!_.isObject(data[k])) {
+      // is not object
+      return seal += data[k];
+    }
+
+    // Is obcject so resort all keys
+    _.each(_.sortBy(_.keys(data[k])), function (k1) {
+      seal += data[k][k1];
+    });
+  });
 
   // retrieve hashMac
   var hmac = crypto.createHmac('sha256', secretKey);
 
   // set data to create Hmac
-  hmac.update(data);
+  hmac.update(utf8.encode(seal));
 
   // Return hmach
   return hmac.digest('hex');

@@ -5,6 +5,7 @@ var logger  = require('yocto-logger');
 var joi     = require('joi');
 var Q       = require('q');
 var api     = require('../api')(logger);
+var utils   = require('yocto-utils');
 
 /**
 * Yocto Atos : Atos wrapper for Sips Office Json Interface
@@ -33,18 +34,21 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
 
   // Joi schema for create authorization
   var schema = joi.object().required().keys({
-    amount                  : joi.number().integer().required().min(0),
-    captureDay              : joi.number().integer().optional().min(0).default(7),
-    captureMode             : joi.string().optional().default('VALIDATION'),
-    cardNumber              : joi.number().integer().required(),
+    amount                  : joi.string().required().min(0),
+    captureDay              : joi.string().optional().min(0).default('0'),
+    captureMode             : joi.string().optional().default('AUTHOR_CAPTURE'),
+    cardNumber              : joi.string().creditCard().required(),
     cardExpiryDate          : joi.string().required().empty(),
     cardCSCValue            : joi.string().required().empty(),
     orderId                 : joi.string().optional().empty(),
+    transactionReference    : joi.string().optional().empty(),
     s10TransactionReference : joi.object().keys({
       s10TransactionId     : joi.string().required().empty(),
       s10TransactionIdDate : joi.string().required().empty(),
     }),
-    fraudData               : joi.object()
+    fraudData               : joi.object(),
+    // Identifier of the shop, this value is provided to the merchant by Sips
+    merchantId              : joi.string().required().empty()
   });
 
   // validate joi schema with the given file
@@ -54,7 +58,7 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
   if (result.error) {
     // An error occured joi schema is not conform
     this.logger.error('[ YoctoAtos.CreditCard.createAuthorization.joi ] - an error' +
-    ' occured schema is not conform, more details : ' + result.error.toString());
+    ' occured schema is not conform, more details : ' + utils.obj.inspect(result.error));
     // Config file was not loaded
     deferred.reject(result.error.toString());
     return deferred.promise;
@@ -67,7 +71,7 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
   ' be send to create authorization payment');
 
   // Call api module to make an request to atos
-  api.process(this.config, 'checkout/cardOrder', paymentData, 'createAuthorization', false).then(
+  api.process(this.config, 'checkout/cardOrder', paymentData, 'createAuthorization', true).then(
   function (value) {
 
     // resolve success
@@ -101,7 +105,9 @@ CreditCard.prototype.capturePayment = function (captureData) {
     s10TransactionReference : joi.object().keys({
       s10TransactionId     : joi.string().required().empty(),
       s10TransactionIdDate : joi.string().required().empty(),
-    })
+    }),
+    // Identifier of the shop, this value is provided to the merchant by Sips
+    merchantId              : joi.string().required().empty()
   });
 
   // validate joi schema with the given file
@@ -158,7 +164,9 @@ CreditCard.prototype.cancelPayment = function (cancelData) {
     s10TransactionReference : joi.object().keys({
       s10TransactionId     : joi.string().required().empty(),
       s10TransactionIdDate : joi.string().required().empty(),
-    })
+    }),
+    // Identifier of the shop, this value is provided to the merchant by Sips
+    merchantId              : joi.string().required().empty()
   });
 
   // validate joi schema with the given file
