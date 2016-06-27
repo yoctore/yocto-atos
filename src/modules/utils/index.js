@@ -52,6 +52,8 @@ Utils.prototype.calculSEAL = function (data, secretKey) {
     });
   });
 
+  console.log('\n --> string to hash : ', seal);
+
   // retrieve hashMac
   var hmac = crypto.createHmac('sha256', secretKey);
 

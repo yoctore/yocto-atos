@@ -49,12 +49,14 @@
     "joi": "8.0.5",
     "lodash": "4.13.1",
     "q": "^1.4.1",
+    "request": "^2.72.0",
     "utf8": "^2.1.1",
     "yocto-logger": "^1.1.6",
     "yocto-utils": "^1.2.8"
   },
   "devDependencies": {
     "grunt": "1.0.1",
+    "chai": "3.5.0",
     "grunt-contrib-uglify": "1.0.1",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "2.4.5",

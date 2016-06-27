@@ -55,7 +55,7 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
 
   try {
     // retrieve response code
-    var responseCode = require('./responseCode.json');
+    var codeList = require('./responseCode.json');
   } catch (error) {
     this.logger.warning('[ YoctoAtos.ApiRequest.process ] - the responseCode file was not found' +
     ' so the error code will not be translate - more details : ' + utils.obj.inspect(error));
@@ -101,10 +101,12 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
         if (!_.isUndefined(body) && !_.isUndefined(body.responseCode)) {
 
           // retrieve the Translation of error code
-          var translateCode = _.find(responseCode.error, { responseCode : body.responseCode });
+          var translateCode = _.find(codeList.responseCode, { code : body.responseCode });
 
           // merge the error code
-          error = _.merge(body, _.isUndefined(translateCode) ? {} : translateCode);
+          error = _.merge(body, _.isUndefined(translateCode) ? {} : {
+            responseCodeTranslate : translateCode.description
+          });
         } else {
 
           // normalize error

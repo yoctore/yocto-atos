@@ -1,3 +1,16 @@
+language: node_js
+node_js:
+- 4.3.1
+env:
+- CXX=g++-4.8
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+  code_climate:
+    repo_token: b9dc9163c56d664c2f293fe07d0975b4f25678a1e6f173247b72110a016dfe55
 deploy:
   provider: npm
   email: technique@yocto.re
@@ -6,3 +19,8 @@ deploy:
   on:
     tags: true
     repo: yoctore/yocto-atos
+  on:
+    tags: true
+    repo: yoctore/yocto-atos
+before_install: npm install -g grunt-cli
+install: npm install

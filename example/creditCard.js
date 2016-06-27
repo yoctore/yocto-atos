@@ -2,45 +2,38 @@ var atos = require('../src')();
 
 var config = {
   mode      : 'sandbox',
-  secretKey : 'yourKey',
+  secretKey : 'mykey',
   config    : {
-    currencyCode      : '978',
-    interfaceVersion  : 'IR_WS_2.11',
-    keyVersion        : '1'
+    currencyCode : '978',
+    keyVersion   : 1
   }
 };
 
 var paymentData = {
-  amount          : '123',
-  cardNumber      : '5017670000005900',
-  cardExpiryDate  : '201905',
-  cardCSCValue    : '985',
-  orderId         : '575acedaa8fa1f33004254a1',
-  // transactionReference : '575acedaa8fa1f33004254a3',
-  // s10TransactionReference : {
-  //   s10TransactionId      : '156985',
-  //   s10TransactionIdDate  : '20160613'
-  // },
-  merchantId      : '201000007070001'
+  amount                : '974',
+  cardNumber            : '5017670000005900',
+  cardExpiryDate        : '201705',
+  cardCSCValue          : '985',
+  orderId               : '575acedaa8fa1f33004254a1',
+  transactionReference  : '3aabcepaapfa1f33a00425aa8',
+  merchantId            : '1'
 };
 
 var captureData = {
-  operationAmount         : '100',
-  s10TransactionReference : {
-    s10TransactionId      : '156985',
-    s10TransactionIdDate  : '20160613'
-  },
-  merchantId              : '201000007070001'
+  operationAmount       : 974,
+  transactionReference  : '3aabcedaapfa1f33a00425aa8',
+  merchantId            : '1',
+  operationOrigin       : 'my app',
 };
 
 var cancelData = {
-  s10TransactionReference : {
-    s10TransactionId      : '156985',
-    s10TransactionIdDate  : '20050606'
-  },
-  merchantId              : '201000007070001'
+  transactionReference  : '3aabcedaapfa1f33a00425aa8',
+  operationOrigin       : 'my app',
+  merchantId            : '1',
+  operationAmount       : 974
 };
 
+// // Create auth payment
 atos.loadConfig(config).then(function (value) {
   console.log('===> success load, value is = ')
 
@@ -53,6 +46,7 @@ atos.loadConfig(config).then(function (value) {
   console.log('===> error, is = ', error);
 });
 
+// // CAptue paument
 // atos.loadConfig(config).then(function (value) {
 //   console.log('===> success load, value is = ')
 //
@@ -65,6 +59,7 @@ atos.loadConfig(config).then(function (value) {
 //   console.log('===> error, is = ', error);
 // });
 
+// Cancel payment
 // atos.loadConfig(config).then(function (value) {
 //   console.log('===> success load, value is = ')
 //
