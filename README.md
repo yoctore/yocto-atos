@@ -35,13 +35,12 @@ The module must be loaded like this :
 var atos = require('yocto-atos')();
 
 atos.loadConfig({
+  // "sandbox" or "live"
   mode : 'sandbox',
   secretKey         : '484GEF87A45AEAA87842634A684A354A643541AA',
   config : {
     currencyCode      : '978',
-    interfaceVersion  : 'IR_WS_2.3',
     keyVersion        : 1,
-    merchantId        : '4545121548451215465432165'
   }
 }).then(function (config) {
   console.log('success')
@@ -61,12 +60,14 @@ To create payment with an credit card
 
 ```javascript
 var paymentData = {
-  amount          : 123,
-  cardNumber      : '559955995599559955',
-  cardExpiryDate  : '201905',
-  cardCSCValue    : '985',
-  orderId         : '57358b7fea9d4398641209e5',
-  s10TransactionReference : {
+  amount                : 123,
+  cardNumber            : '559955995599559955',
+  cardExpiryDate        : '201905',
+  cardCSCValue          : '985',
+  merchantId            : '1',
+  orderId               : '57358b7fea9d4398641209e5', // optional
+  transactionReference  : '57358b7fea9d4398641209e5', // optional
+  s10TransactionReference : { // optional
     s10TransactionId      : '777888899445566112233',
     s10TransactionIdDate  : '20050606'
   }
@@ -81,11 +82,13 @@ atos.modules.creditCard.createAuthorization(paymentData).then(function (config) 
 
 ### Capture payment
 
-TO capture an payment you should have an valid capture payment
+TO capture an payment you should have an valid capture payment. The field "transactionReference" or "s10TransactionReference" should be set.
 
 ```javascript
 var captureData = {
-  operationAmount : 100,
+  operationAmount       : 100,
+  merchantId            : '1',
+  transactionReference  : '57358b7fea9d4398641209e5',
   s10TransactionReference : {
     s10TransactionId      : '777888899445566112233',
     s10TransactionIdDate  : '20050606'
@@ -101,11 +104,15 @@ atos.capturePayment(captureData).then(function (config) {
 
 ### Cancel payment
 
-An payment authorization can be void
+An payment authorization can be void only if was previously captured and not sent to the bank. The field "transactionReference" or "s10TransactionReference" should be set.
 
 ```javascript
 
 var cancelData = {
+  transactionReference  : '3aabcedaapfa1f33a00425aa8',
+  operationOrigin       : 'my app',
+  merchantId            : '1',
+  operationAmount       : 974
   s10TransactionReference : {
     s10TransactionId      : '777888899445566112233',
     s10TransactionIdDate  : '20050606'
