@@ -4,7 +4,6 @@ var _       = require('lodash');
 var logger  = require('yocto-logger');
 var joi     = require('joi');
 var Q       = require('q');
-var api     = require('../api')(logger);
 var utils   = require('yocto-utils');
 
 /**
@@ -17,9 +16,14 @@ var utils   = require('yocto-utils');
 */
 function CreditCard (yLogger, config) {
 
+  // config
   this.config = config || {};
 
+  // default logger
   this.logger = yLogger;
+
+  // require api
+  this.api = require('../api')(logger);
 }
 
 /**
@@ -34,21 +38,20 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
 
   // Joi schema for create authorization
   var schema = joi.object().required().keys({
-    amount                  : joi.string().required().min(0),
-    captureDay              : joi.string().optional().min(0).default('0'),
-    captureMode             : joi.string().optional().default('AUTHOR_CAPTURE'),
+    amount                  : joi.number().integer().required().min(0),
+    captureDay              : joi.number().integer().optional().min(0).default(6),
+    orderChannel            : joi.string().optional().default('INTERNET'),
+    captureMode             : joi.string().optional().default('VALIDATION'),
+    paymentPattern          : joi.string().optional().default('ONE_SHOT'),
     cardNumber              : joi.string().creditCard().required(),
     cardExpiryDate          : joi.string().required().empty(),
     cardCSCValue            : joi.string().required().empty(),
     orderId                 : joi.string().optional().empty(),
     transactionReference    : joi.string().optional().empty(),
-    s10TransactionReference : joi.object().keys({
-      s10TransactionId     : joi.string().required().empty(),
-      s10TransactionIdDate : joi.string().required().empty(),
-    }),
+    interfaceVersion        : joi.string().optional().default('IR_WS_2.12'),
     fraudData               : joi.object(),
     // Identifier of the shop, this value is provided to the merchant by Sips
-    merchantId              : joi.string().required().empty()
+    merchantId              : joi.number().integer().required().min(0)
   });
 
   // validate joi schema with the given file
@@ -71,8 +74,8 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
   ' be send to create authorization payment');
 
   // Call api module to make an request to atos
-  api.process(this.config, 'checkout/cardOrder', paymentData, 'createAuthorization', true).then(
-  function (value) {
+  this.api.process(this.config, 'checkout/cardOrder', paymentData, 'createAuthorization', false).
+  then(function (value) {
 
     // resolve success
     deferred.resolve(value);
@@ -102,12 +105,11 @@ CreditCard.prototype.capturePayment = function (captureData) {
   // Joi schema for create authorization
   var schema = joi.object().required().keys({
     operationAmount         : joi.number().integer().required().min(0),
-    s10TransactionReference : joi.object().keys({
-      s10TransactionId     : joi.string().required().empty(),
-      s10TransactionIdDate : joi.string().required().empty(),
-    }),
+    transactionReference    : joi.string().optional().empty(),
     // Identifier of the shop, this value is provided to the merchant by Sips
-    merchantId              : joi.string().required().empty()
+    merchantId              : joi.string().required().empty(),
+    interfaceVersion        : joi.string().optional().default('CR_WS_2.12'),
+    operationOrigin         : joi.string().optional().empty()
   });
 
   // validate joi schema with the given file
@@ -130,7 +132,7 @@ CreditCard.prototype.capturePayment = function (captureData) {
   ' be send to create authorization payment');
 
   // Call api module to make an request to atos to capture payment
-  api.process(this.config, 'cashManagement/validate', captureData, 'capturePayment').then(
+  this.api.process(this.config, 'cashManagement/validate', captureData, 'capturePayment').then(
   function (value) {
 
     // resolve success
@@ -160,13 +162,16 @@ CreditCard.prototype.cancelPayment = function (cancelData) {
 
   // Joi schema for create authorization
   var schema = joi.object().required().keys({
-    operationAmount         : joi.number().integer().optional().min(0).max(0).default(0),
-    s10TransactionReference : joi.object().keys({
+    operationAmount         : joi.number().integer().required().min(0),
+    s10TransactionReference : joi.object().optional().keys({
       s10TransactionId     : joi.string().required().empty(),
       s10TransactionIdDate : joi.string().required().empty(),
     }),
     // Identifier of the shop, this value is provided to the merchant by Sips
-    merchantId              : joi.string().required().empty()
+    merchantId              : joi.string().required().empty(),
+    interfaceVersion        : joi.string().optional().default('CR_WS_2.12'),
+    transactionReference    : joi.string().optional().empty(),
+    operationOrigin         : joi.string().optional().empty()
   });
 
   // validate joi schema with the given file
@@ -189,7 +194,7 @@ CreditCard.prototype.cancelPayment = function (cancelData) {
   ' be send to create authorization payment');
 
   // Call api module to make an request to atos to capture payment
-  api.process(this.config, 'cashManagement/cancel', cancelData, 'capturePayment').then(
+  this.api.process(this.config, 'cashManagement/cancel', cancelData, 'capturePayment').then(
   function (value) {
 
     // resolve success

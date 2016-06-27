@@ -55,10 +55,8 @@ YoctoAtos.prototype.loadConfig = function (config) {
       currencyCode     : joi.string().required().valid([ '032', '036', '116', '124', '208',
       '344', '356', '392', '410', '484', '554', '578', '702', '752', '756', '826', '840', '901',
       '949', '952', '953', '978', '986']),
-      // Version value and number of the interface used.
-      interfaceVersion : joi.string().required().empty(),
       // Version of the merchant's secret key used to calculate the imprint of the message
-      keyVersion       : joi.string().required()
+      keyVersion       : joi.number().integer().required().min(0)
     })
   });
 

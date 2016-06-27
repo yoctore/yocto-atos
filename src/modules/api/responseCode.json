@@ -1,169 +1,257 @@
 {
-  "success" : [
+  "responseCode" : [
     {
-      "responseCode" : "00",
-      "description"  : "Transaction approved or processed successfully"
-    }
-  ],
-  "error" : [
-    {
-      "responseCode" : "02",
-      "description"  : "Contact payment mean issuer"
+      "code" : "00",
+      "description"  : "Authorisation accepted"
     },
     {
-      "responseCode" : "03",
-      "description"  : "Invalid acceptor"
+      "code" : "02",
+      "description"  : "Authorisation request to be performed via telephone with the issuer, as the card authorisation threshold has been exceeded. You need to be authorised to force transactions"
     },
     {
-      "responseCode" : "04",
-      "description"  : "Keep the payment mean"
+      "code" : "03",
+      "description"  : "Invalid Merchant contract"
     },
     {
-      "responseCode" : "05",
-      "description"  : "Do not honour"
+      "code" : "05",
+      "description"  : "Authorisation refused"
     },
     {
-      "responseCode" : "07",
-      "description"  : "Keep the payment mean, special conditions"
+      "code" : "11",
+      "description"  : "Used for differed check. The PAN is blocked."
     },
     {
-      "responseCode" : "08",
-      "description"  : "Approve after identification"
+      "code" : "12",
+      "description"  : "Invalid transaction, check the request parameters"
     },
     {
-      "responseCode" : "12",
-      "description"  : "Invalid transaction"
+      "code" : "14",
+      "description"  : "Invalid PAN or payment mean data (ex: card security code)"
     },
     {
-      "responseCode" : "13",
-      "description"  : "Invalid amount"
+      "code" : "17",
+      "description"  : "Buyer cancellation"
     },
     {
-      "responseCode" : "14",
-      "description"  : "Invalid PAN"
+      "code" : "24",
+      "description"  : "Operation not authorized. The operation you wish to perform is not compliant with the transaction status"
     },
     {
-      "responseCode" : "15",
-      "description"  : "Unknown payment mean issuer"
+      "code" : "25",
+      "description"  : "Transaction unknown by Sips"
     },
     {
-      "responseCode" : "17",
-      "description"  : "Payment aborted by the buyer"
-    },
-    {
-      "responseCode" : "24",
-      "description"  : "Operation not authorised"
-    },
-    {
-      "responseCode" : "25",
-      "description"  : "Transaction not found"
-    },
-    {
-      "responseCode" : "30",
+      "code" : "30",
       "description"  : "Format error"
     },
     {
-      "responseCode" : "31",
-      "description"  : "Id of the acquiring organisation unknown"
-    },
-    {
-      "responseCode" : "33",
-      "description"  : "payment mean expired"
-    },
-    {
-      "responseCode" : "34",
+      "code" : "34",
       "description"  : "Fraud suspicion"
     },
     {
-      "responseCode" : "40",
-      "description"  : "Function not supported"
+      "code" : "40",
+      "description"  : "Function not supported: the operation that you wish to perform is not part of the operation type for which you are authorised"
     },
     {
-      "responseCode" : "41",
-      "description"  : "Payment mean lost"
+      "code" : "51",
+      "description"  : "Amount too high"
     },
     {
-      "responseCode" : "43",
-      "description"  : "Payment mean stolen"
+      "code" : "54",
+      "description"  : "Payment mean expiry date is past"
     },
     {
-      "responseCode" : "51",
-      "description"  : "Insufficient or exceeded credit 54 Payment mean expired"
+      "code" : "60",
+      "description"  : "Transaction pending"
     },
     {
-      "responseCode" : "56",
-      "description"  : "Payment mean missing from the file"
+      "code" : "63",
+      "description"  : "Security rules not observed, transaction stopped"
     },
     {
-      "responseCode" : "57",
-      "description"  : "Transaction unauthorised for this payment mean holder"
-    },
-    {
-      "responseCode" : "58",
-      "description"  : "Transaction forbidden to the terminal"
-    },
-    {
-      "responseCode" : "59",
-      "description"  : "Fraud suspicion"
-    },
-    {
-      "responseCode" : "60",
-      "description"  : "The payment mean acceptor must contact the acquirer"
-    },
-    {
-      "responseCode" : "61",
-      "description"  : "Exceeds the amount limit"
-    },
-    {
-      "responseCode" : "62",
-      "description"  : "Transaction awaiting payment confirmation"
-    },
-    {
-      "responseCode" : "63",
-      "description"  : "Security rules not complied with"
-    },
-    {
-      "responseCode" : "68",
-      "description"  : "Response not received or received too late"
-    },
-    {
-      "responseCode" : "65",
-      "description"  : "Allowed number of daily transactions has been exceeded "
-    },
-    {
-      "responseCode" : "75",
+      "code" : "75",
       "description"  : "Exceeded number of PAN attempts"
     },
     {
-      "responseCode" : "87",
+      "code" : "90",
+      "description"  : "Service temporarily not available"
+    },
+    {
+      "code" : "94",
+      "description"  : "Duplicated transaction: the transactionReference has been used previously"
+    },
+    {
+      "code" : "97",
+      "description"  : "Time frame exceeded, transaction refused"
+    },
+    {
+      "code" : "99",
+      "description"  : "Temporary problem at the Sips server level"
+    }
+  ],
+  "acquirerResponseCode" : [
+    {
+      "code" : "00",
+      "description"  : "Transaction approved or processed successfully"
+    },
+    {
+      "code" : "02",
+      "description"  : "Contact payment mean issuer"
+    },
+    {
+      "code" : "03",
+      "description"  : "Invalid acceptor"
+    },
+    {
+      "code" : "04",
+      "description"  : "Keep the payment mean"
+    },
+    {
+      "code" : "05",
+      "description"  : "Do not honour"
+    },
+    {
+      "code" : "07",
+      "description"  : "Keep the payment mean, special conditions"
+    },
+    {
+      "code" : "08",
+      "description"  : "Approve after identification"
+    },
+    {
+      "code" : "12",
+      "description"  : "Invalid transaction"
+    },
+    {
+      "code" : "13",
+      "description"  : "Invalid amount"
+    },
+    {
+      "code" : "14",
+      "description"  : "Invalid PAN"
+    },
+    {
+      "code" : "15",
+      "description"  : "Unknown payment mean issuer"
+    },
+    {
+      "code" : "17",
+      "description"  : "Payment aborted by the buyer"
+    },
+    {
+      "code" : "24",
+      "description"  : "Operation not authorised"
+    },
+    {
+      "code" : "25",
+      "description"  : "Transaction not found"
+    },
+    {
+      "code" : "30",
+      "description"  : "Format error"
+    },
+    {
+      "code" : "31",
+      "description"  : "Id of the acquiring organisation unknown"
+    },
+    {
+      "code" : "33",
+      "description"  : "payment mean expired"
+    },
+    {
+      "code" : "34",
+      "description"  : "Fraud suspicion"
+    },
+    {
+      "code" : "40",
+      "description"  : "Function not supported"
+    },
+    {
+      "code" : "41",
+      "description"  : "Payment mean lost"
+    },
+    {
+      "code" : "43",
+      "description"  : "Payment mean stolen"
+    },
+    {
+      "code" : "51",
+      "description"  : "Insufficient or exceeded credit 54 Payment mean expired"
+    },
+    {
+      "code" : "56",
+      "description"  : "Payment mean missing from the file"
+    },
+    {
+      "code" : "57",
+      "description"  : "Transaction unauthorised for this payment mean holder"
+    },
+    {
+      "code" : "58",
+      "description"  : "Transaction forbidden to the terminal"
+    },
+    {
+      "code" : "59",
+      "description"  : "Fraud suspicion"
+    },
+    {
+      "code" : "60",
+      "description"  : "The payment mean acceptor must contact the acquirer"
+    },
+    {
+      "code" : "61",
+      "description"  : "Exceeds the amount limit"
+    },
+    {
+      "code" : "62",
+      "description"  : "Transaction awaiting payment confirmation"
+    },
+    {
+      "code" : "63",
+      "description"  : "Security rules not complied with"
+    },
+    {
+      "code" : "68",
+      "description"  : "Response not received or received too late"
+    },
+    {
+      "code" : "65",
+      "description"  : "Allowed number of daily transactions has been exceeded "
+    },
+    {
+      "code" : "75",
+      "description"  : "Exceeded number of PAN attempts"
+    },
+    {
+      "code" : "87",
       "description"  : "Terminal unknown"
     },
     {
-      "responseCode" : "90",
+      "code" : "90",
       "description"  : "System temporarily stopped"
     },
     {
-      "responseCode" : "91",
+      "code" : "91",
       "description"  : "Payment mean issuer inaccessible"
     },
     {
-      "responseCode" : "94",
+      "code" : "94",
       "description"  : "Duplicated transaction"
     },
     {
-      "responseCode" : "96",
+      "code" : "96",
       "description"  : "System malfunction"
     },
     {
-      "responseCode" : "97",
+      "code" : "97",
       "description"  : "Request time-out; transaction refused"
     },
     {
-      "responseCode" : "98",
+      "code" : "98",
       "description"  : "Server unavailable; network routing requested again"
     },
     {
-      "responseCode" : "99",
+      "code" : "99",
       "description"  : "Incident with initiator domain"
     }
   ]
