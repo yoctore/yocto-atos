@@ -2,7 +2,7 @@ var atos = require('../src')();
 
 var config = {
   mode      : 'sandbox',
-  secretKey : 'mykey',
+  secretKey : 'key',
   config    : {
     currencyCode : '978',
     keyVersion   : 1
@@ -11,12 +11,20 @@ var config = {
 
 var paymentData = {
   amount                : '974',
-  cardNumber            : '5017670000005900',
+  cardNumber            : '5017670000008300',
   cardExpiryDate        : '201705',
   cardCSCValue          : '985',
   orderId               : '575acedaa8fa1f33004254a1',
-  transactionReference  : '3aabcepaapfa1f33a00425aa8',
-  merchantId            : '1'
+  transactionReference  : '92abc2paapfa1f33a00425aa8',
+  merchantId            : '1',
+  billingContact        : {
+    firstname : 'foo',
+    lastname  : 'bar'
+  },
+  fraudData             : {
+    allowedCardCountryList  : [ 'FRA', 'MUS', 'REU', 'MDG' ],
+    allowedIpCountryList    : [ 'FRA', 'MUS', 'REU', 'MDG' ]
+  }
 };
 
 var captureData = {

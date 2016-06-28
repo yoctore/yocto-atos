@@ -1,6 +1,6 @@
 {
   "name": "yocto-atos",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Yocto module to make payment with Atos - Wrapper for Sips Office Json Interface",
   "main": "dist/index.js",
   "scripts": {

@@ -49,9 +49,37 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
     orderId                 : joi.string().optional().empty(),
     transactionReference    : joi.string().optional().empty(),
     interfaceVersion        : joi.string().optional().default('IR_WS_2.12'),
-    fraudData               : joi.object(),
     // Identifier of the shop, this value is provided to the merchant by Sips
-    merchantId              : joi.number().integer().required().min(0)
+    merchantId              : joi.number().integer().required().min(0),
+    billingContact          : joi.object().optional().keys({
+      email     : joi.string().email().optional().empty(),
+      firstname : joi.string().optional().empty(),
+      gender    : joi.string().optional().empty().allow([ 'M', 'F']),
+      lastname  : joi.string().optional().empty(),
+      mobile    : joi.string().optional().empty(),
+      phone     : joi.string().optional().empty(),
+      title     : joi.string().optional().empty()
+    }),
+    fraudData               : joi.object().optional().keys({
+      allowedCardCountryList  : joi.array().optional().items(
+        joi.string().length(3)
+      ),
+      allowedIpCountryList    :  joi.array().optional().items(
+        joi.string().length(3)
+      ),
+      bypassCtrlList          : joi.array().optional().items(
+        joi.string().empty()
+      ),
+      bypassInfoList          : joi.string().optional().empty().allow([
+        'IpCountry', 'Card', 'All'
+      ]),
+      deniedCardCountryList   :  joi.array().optional().items(
+        joi.string().length(3)
+      ),
+      deniedIpCountryList     :  joi.array().optional().items(
+        joi.string().length(3)
+      )
+    })
   });
 
   // validate joi schema with the given file
