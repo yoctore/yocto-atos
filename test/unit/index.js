@@ -12,11 +12,17 @@ var types = [ null, undefined, 1, true, false, NaN, 'a', '', {}, [] ];
 
 var config = {
   mode      : 'sandbox',
-  secretKey : 'mykey',
-  config    : {
-    currencyCode : '978',
-    keyVersion   : 1
-  }
+  shops : [
+    {
+      label : 'test',
+      merchantId : '1110',
+      secretKey : 111,
+      config    : {
+        currencyCode : '978',
+        keyVersion   : 1
+      }
+    }
+  ]
 };
 
 describe('Load config', function () {
@@ -43,11 +49,17 @@ describe('Load config', function () {
 
         var config = {
           mode          : t,
-          secretKey : 'mykey',
-          config    : {
-            currencyCode : '978',
-            keyVersion   : 1
-          }
+          shops : [
+            {
+              label : 'test',
+              merchantId : '1110',
+              secretKey : 111,
+              config    : {
+                currencyCode : '978',
+                keyVersion   : 1
+              }
+            }
+          ]
         };
         // note the return
         return atos.loadConfig(config).catch(function (data) {
@@ -70,11 +82,17 @@ describe('Load config', function () {
 
         var config = {
           mode          : 'sandbox',
-          secretKey : t,
-          config    : {
-            currencyCode : t,
-            keyVersion   : t
-          }
+          shops : [
+            {
+              label : t,
+              merchantId : t,
+              secretKey : t,
+              config    : {
+                currencyCode : t,
+                keyVersion   : t
+              }
+            }
+          ]
         };
         // note the return
         return atos.loadConfig(config).catch(function (data) {

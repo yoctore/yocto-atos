@@ -19,23 +19,35 @@ function ApiRequest (l) {
 /**
  * Default method to prepare request before orika api call
  *
+ * @param {Object} config config data to retrieve default value
  * @param {Object} data default data to use on request
- * @param {String} secretKey secretKey to Calcul SEAL
  * @return {Boolean} true if all is ok false otherwise
  */
-ApiRequest.prototype.prepare = function (data, secretKey) {
+ApiRequest.prototype.prepare = function (config, data) {
   try {
+
     var orikaUtils = require('../utils')(this.logger);
 
+    // retrieve the config shop
+    var shop = _.find(config.shops, {
+      merchantId : data.merchantId
+    });
+
+    // Check if config exist
+    if (_.isUndefined(shop) || _.isEmpty(shop)) {
+      throw 'Config was not found for the shop with merchantId : ' + data.merchantId +
+      ' so the request will not be sent';
+    }
+
     // Calcul hashmac of the request to add into SEAL
-    data.seal = orikaUtils.calculSEAL(data, secretKey);
+    data.seal = orikaUtils.calculSEAL(_.merge(data, shop.config), shop.secretKey);
 
     // return the data to send to ATOS
     return data;
   } catch (error) {
     this.logger.error('[ YoctoAtos.ApiRequest.prepare ] - an error occured : ' + error);
     // default statement
-    return !true;
+    return error;
   }
 };
 
@@ -68,14 +80,14 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
   var host = config.host + '/' + endpoint;
 
   // default merged data to use
-  data = this.prepare(_.merge(_.clone(config.config), data), config.secretKey);
+  data = this.prepare(config, data);
 
   // prepare request
   if (_.isObject(data)) {
     // debug message
     this.logger.debug([ '[ YoctoAtos.ApiRequest.process ] - Processing a POST request to :',
                          host, 'with data : ', showDataLog ? utils.obj.inspect(data) :
-                         'data not allow to be displayed' ].join(' '));
+                         'data not allowed to be displayed' ].join(' '));
     // process request
     request({
       json    : true,
@@ -127,10 +139,11 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
     // log error
     this.logger.error([ '[ YoctoAtos.ApiRequest.process ] - Cannot process request for', method,
                         'method.', 'Cannot prepare data with given value :',
-                        utils.obj.inspect(_.values(arguments))
+                        showDataLog ? utils.obj.inspect(data) :
+                        'data not allow to be displayed'
                       ].join(' '));
     // reject
-    deferred.reject();
+    deferred.reject(data);
   }
 
   // default statement

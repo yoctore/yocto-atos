@@ -50,7 +50,7 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
     transactionReference    : joi.string().optional().empty(),
     interfaceVersion        : joi.string().optional().default('IR_WS_2.12'),
     // Identifier of the shop, this value is provided to the merchant by Sips
-    merchantId              : joi.number().integer().required().min(0),
+    merchantId              : joi.string().optional().empty(),
     customerId              : joi.string().optional().empty(),
     customerIpAddress       : joi.string().optional().empty(),
     invoiceReference        : joi.string().optional().empty(),
