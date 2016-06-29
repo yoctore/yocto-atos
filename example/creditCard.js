@@ -2,7 +2,7 @@ var atos = require('../src')();
 
 var config = {
   mode      : 'sandbox',
-  secretKey : 'key',
+  secretKey : '',
   config    : {
     currencyCode : '978',
     keyVersion   : 1
@@ -15,16 +15,53 @@ var paymentData = {
   cardExpiryDate        : '201705',
   cardCSCValue          : '985',
   orderId               : '575acedaa8fa1f33004254a1',
-  transactionReference  : '92abc2paapfa1f33a00425aa8',
+  transactionReference  : '94abc2paapfa1f33a00425aa8',
   merchantId            : '1',
+  customerIpAddress     : '192.168.2.101',
+  invoiceReference      : '8216062410201313',
+  //customerId            : '574eb5e8b7e67f7832f562fc',
   billingContact        : {
     firstname : 'foo',
     lastname  : 'bar'
   },
-  fraudData             : {
-    allowedCardCountryList  : [ 'FRA', 'MUS', 'REU', 'MDG' ],
-    allowedIpCountryList    : [ 'FRA', 'MUS', 'REU', 'MDG' ]
+  billingAddress        : {
+    country   : 'REU',
+    addressAdditional1 : 'toto route',
+    zipCode : '97400'
+  },
+  customerContact        : {
+    firstname : 'foo',
+    lastname  : 'bar'
+  },
+  customerAddress        : {
+    country   : 'REU',
+    addressAdditional1 : 'toto route',
+    zipCode : '97400'
+  },
+  shoppingCartDetail  : {
+    shoppingCartTotalTaxAmount : 50,
+    shoppingCartItemList : [
+      {
+        productSKU  : '1234567891234',
+        productCode : '1234567891234',
+        productName : 'toto'
+      },
+      {
+        productSKU  : '8524567891234',
+        productCode : '8524567891234',
+        productName : 'tata'
+      },
+      {
+        productSKU  : '9658467891234',
+        productCode : '9658467891234',
+        productName : 'titi'
+      }
+  ]
   }
+  // fraudData             : {
+  //   allowedCardCountryList  : [ 'FRA', 'MUS', 'REU', 'MDG' ],
+  //   allowedIpCountryList    : [ 'FRA', 'MUS', 'REU', 'MDG' ]
+  // }
 };
 
 var captureData = {

@@ -48,11 +48,37 @@ Utils.prototype.calculSEAL = function (data, secretKey) {
 
     // Is obcject so resort all keys
     _.each(_.sortBy(_.keys(data[k])), function (k1) {
-      seal += data[k][k1];
+
+      // check if is object
+      if (!_.isObject(data[k][k1])) {
+        // is not object
+        return seal += data[k][k1];
+      }
+
+      // check if is array
+      if (_.isArray(data[k][k1])) {
+
+        // Is obcject so resort all keys
+        _.each(_.sortBy(_.keys(data[k][k1])), function (k2) {
+
+          // check is string
+          if (!_.isObject(data[k][k1][k2])) {
+            return seal += data[k][k1][k2];
+          }
+
+          // Is obcject so resort all keys
+          _.each(_.sortBy(_.keys(data[k][k1][k2])), function (k3) {
+            seal += data[k][k1][k2][k3];
+          });
+        });
+      } else {
+        // Is obcject so resort all keys
+        _.each(_.sortBy(_.keys(data[k][k1])), function (k2) {
+          seal += data[k][k1][k2];
+        });
+      }
     });
   });
-
-  console.log('\n --> string to hash : ', seal);
 
   // retrieve hashMac
   var hmac = crypto.createHmac('sha256', secretKey);

@@ -51,6 +51,23 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
     interfaceVersion        : joi.string().optional().default('IR_WS_2.12'),
     // Identifier of the shop, this value is provided to the merchant by Sips
     merchantId              : joi.number().integer().required().min(0),
+    customerId              : joi.string().optional().empty(),
+    customerIpAddress       : joi.string().optional().empty(),
+    invoiceReference        : joi.string().optional().empty(),
+    transactionOrigin       : joi.string().optional().empty(),
+    billingAddress          : joi.object().optional().keys({
+      addressAdditional1  : joi.string().optional().empty(),
+      addressAdditional2  : joi.string().optional().empty(),
+      addressAdditional3  : joi.string().optional().empty(),
+      city                : joi.string().optional().empty(),
+      company             : joi.string().optional().empty(),
+      country             : joi.string().optional().length(3),
+      postBox             : joi.string().optional().empty(),
+      state               : joi.string().optional().empty(),
+      street              : joi.string().optional().empty(),
+      streetNumber        : joi.string().optional().empty(),
+      zipCode             : joi.string().optional().empty(),
+    }),
     billingContact          : joi.object().optional().keys({
       email     : joi.string().email().optional().empty(),
       firstname : joi.string().optional().empty(),
@@ -59,6 +76,74 @@ CreditCard.prototype.createAuthorization = function (paymentData) {
       mobile    : joi.string().optional().empty(),
       phone     : joi.string().optional().empty(),
       title     : joi.string().optional().empty()
+    }),
+    customerAddress         : joi.object().optional().keys({
+      addressAdditional1  : joi.string().optional().empty(),
+      addressAdditional2  : joi.string().optional().empty(),
+      addressAdditional3  : joi.string().optional().empty(),
+      city                : joi.string().optional().empty(),
+      company             : joi.string().optional().empty(),
+      country             : joi.string().optional().length(3),
+      postBox             : joi.string().optional().empty(),
+      state               : joi.string().optional().empty(),
+      street              : joi.string().optional().empty(),
+      streetNumber        : joi.string().optional().empty(),
+      zipCode             : joi.string().optional().empty(),
+    }),
+    customerContact         : joi.object().optional().keys({
+      email     : joi.string().email().optional().empty(),
+      firstname : joi.string().optional().empty(),
+      gender    : joi.string().optional().empty().allow([ 'M', 'F']),
+      lastname  : joi.string().optional().empty(),
+      mobile    : joi.string().optional().empty(),
+      phone     : joi.string().optional().empty(),
+      title     : joi.string().optional().empty()
+    }),
+    deliveryAddress         : joi.object().optional().keys({
+      addressAdditional1  : joi.string().optional().empty(),
+      addressAdditional2  : joi.string().optional().empty(),
+      addressAdditional3  : joi.string().optional().empty(),
+      city                : joi.string().optional().empty(),
+      company             : joi.string().optional().empty(),
+      country             : joi.string().optional().length(3),
+      postBox             : joi.string().optional().empty(),
+      state               : joi.string().optional().empty(),
+      street              : joi.string().optional().empty(),
+      streetNumber        : joi.string().optional().empty(),
+      zipCode             : joi.string().optional().empty(),
+    }),
+    deliveryContact         : joi.object().optional().keys({
+      email     : joi.string().email().optional().empty(),
+      firstname : joi.string().optional().empty(),
+      gender    : joi.string().optional().empty().allow([ 'M', 'F']),
+      lastname  : joi.string().optional().empty(),
+      mobile    : joi.string().optional().empty(),
+      phone     : joi.string().optional().empty(),
+      title     : joi.string().optional().empty()
+    }),
+    shoppingCartDetail      : joi.object().optional().keys({
+      shoppingCartTotalAmount     : joi.number().integer().optional().min(0),
+      shoppingCartTotalQuantity   : joi.number().integer().optional().min(0),
+      shoppingCartTotalTaxAmount  : joi.number().integer().optional().min(0),
+      // The most expensive product in the shopping cart.
+      mainProduct                 : joi.string().optional().empty(),
+      shoppingCartItemList        : joi.array().items(
+        joi.object().keys({
+          // Monetary value of the tax for the product (unit)
+          productUnitTaxAmount  : joi.number().optional().min(0),
+          productName           : joi.string().optional().empty(),
+          productDescription    : joi.string().optional().empty(),
+          // Code of the ordered product.
+          productCode           : joi.string().optional().empty(),
+          // Merchant’s product identifier code, sent back in the response without modification.
+          productSKU            : joi.string().optional().empty(),
+          // Unit amount of the product
+          productUnitAmount     : joi.number().optional().min(0),
+          productQuantity       : joi.number().optional().min(0),
+          productTaxRate        : joi.number().optional().min(0),
+          productCategory       : joi.string().optional().empty()
+        })
+      ).optional()
     }),
     fraudData               : joi.object().optional().keys({
       allowedCardCountryList  : joi.array().optional().items(
