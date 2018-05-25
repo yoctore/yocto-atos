@@ -84,7 +84,7 @@ Utils.prototype.calculSEAL = function (data, secretKey) {
   var hmac = crypto.createHmac('sha256', secretKey);
 
   // set data to create Hmac
-  hmac.update(utf8.encode(seal));
+  hmac.update(new Buffer(seal, 'utf8'));
 
   // Return hmach
   return hmac.digest('hex');
