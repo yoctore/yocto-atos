@@ -3,7 +3,6 @@
 var logger  = require('yocto-logger');
 var crypto  = require('crypto');
 var _       = require('lodash');
-var utf8    = require('utf8');
 
 /**
  * Yocto Atos : Atos wrapper for Sips Office Json Interface

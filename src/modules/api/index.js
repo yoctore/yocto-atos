@@ -21,10 +21,13 @@ function ApiRequest (l) {
  *
  * @param {Object} config config data to retrieve default value
  * @param {Object} data default data to use on request
+ * @param {Boolean} removeCurrencyCode indicate if should remove Currency Code
  * @return {Boolean} true if all is ok false otherwise
  */
-ApiRequest.prototype.prepare = function (config, data) {
+ApiRequest.prototype.prepare = function (config, data, removeCurrencyCode) {
   try {
+
+    removeCurrencyCode = removeCurrencyCode || false;
 
     var orikaUtils = require('../utils')(this.logger);
 
@@ -39,8 +42,15 @@ ApiRequest.prototype.prepare = function (config, data) {
       ' so the request will not be sent';
     }
 
+    data = _.merge(data, shop.config);
+
+    // Check if should remoce currencyCode
+    if (removeCurrencyCode) {
+      delete data.currencyCode;
+    }
+
     // Calcul hashmac of the request to add into SEAL
-    data.seal = orikaUtils.calculSEAL(_.merge(data, shop.config), shop.secretKey);
+    data.seal = orikaUtils.calculSEAL(data, shop.secretKey);
 
     // return the data to send to ATOS
     return data;
@@ -59,9 +69,11 @@ ApiRequest.prototype.prepare = function (config, data) {
  * @param {Object} data data to send on request
  * @param {String} method Method name that call this process
  * @param {Boolean} showDataLog optional parameter to disable log of the querry
+ * @param {Boolean} removeCurrencyCode indicate if should remove Currency Code
  * @return {Object} default promise to use on the end of request
  */
-ApiRequest.prototype.process = function (config, endpoint, data, method, showDataLog) {
+ApiRequest.prototype.process = function (config, endpoint, data, method, showDataLog,
+removeCurrencyCode) {
   // create async process
   var deferred = Q.defer();
 
@@ -80,7 +92,7 @@ ApiRequest.prototype.process = function (config, endpoint, data, method, showDat
   var host = config.host + '/' + endpoint;
 
   // default merged data to use
-  data = this.prepare(config, data);
+  data = this.prepare(config, data, removeCurrencyCode);
 
   // prepare request
   if (_.isObject(data)) {
