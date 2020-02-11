@@ -1,7 +1,7 @@
 var atos = require('../src')();
 
-var MERCHANT_ID = '';
-var SECRET_KEY = '';
+var MERCHANT_ID = process.env.MERCHANT_ID;
+var SECRET_KEY = process.env.SECRET_KEY;
 
 var config = {
   mode      : 'sandbox',
@@ -158,18 +158,18 @@ var cardValidateAuthenticationAndOrder = {
 atos.loadConfig(config).then(function (value) {
  // console.log('===> success load, value is = ', paymentData3DSecure)
 
-  // atos.modules.creditCard.cardCheckEnrollment(paymentData3DSecure).then(function (value) {
-  //   console.log('\n===> success create auth payment, value is = ', value)
-  // }).catch(function (error) {
-  //   console.log('\n===> error, is = ', error)
-  // });
-  
-  atos.modules.creditCard.cardValidateAuthenticationAndOrder(cardValidateAuthenticationAndOrder)
-  .then(function (value) {
+  atos.modules.creditCard.cardCheckEnrollment(paymentData3DSecure).then(function (value) {
     console.log('\n===> success create auth payment, value is = ', value)
   }).catch(function (error) {
     console.log('\n===> error, is = ', error)
   });
+  
+  // atos.modules.creditCard.cardValidateAuthenticationAndOrder(cardValidateAuthenticationAndOrder)
+  // .then(function (value) {
+  //   console.log('\n===> success create auth payment, value is = ', value)
+  // }).catch(function (error) {
+  //   console.log('\n===> error, is = ', error)
+  // });
 
   // atos.modules.creditCard.capturePayment(captureData).then(function (value) {
   //   console.log('===> success create auth payment, value is = ', value)
