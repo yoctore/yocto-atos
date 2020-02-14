@@ -337,6 +337,9 @@ CreditCard.prototype.cardCheckEnrollment = function (paymentData) {
 
   // Joi schema for create authorization
   var schema = joi.object().required().keys({
+    merchantTransactionDateTime : joi.string().optional().empty(),
+
+    // Amount
     amount                  : joi.number().integer().required().min(0),
     captureDay              : joi.number().integer().optional().min(0).default(6),
     orderChannel            : joi.string().optional().default('INTERNET'),
@@ -348,7 +351,8 @@ CreditCard.prototype.cardCheckEnrollment = function (paymentData) {
     cardCSCValue            : joi.string().required().empty(),
     orderId                 : joi.string().optional().empty(),
     transactionReference    : joi.string().optional().empty(),
-    interfaceVersion        : joi.string().optional().default('IR_WS_2.29'),
+    interfaceVersion        : joi.string().optional().default('IR_WS_2.31'),
+    panType                 : joi.string().optional().valid([ 'CSE', 'PAN', 'TOKEN_PAN' ]),
     // Identifier of the shop, this value is provided to the merchant by Sips
     merchantId              : joi.string().optional().empty(),
     customerId              : joi.string().optional().empty(),
@@ -574,10 +578,11 @@ CreditCard.prototype.cardValidateAuthenticationAndOrder = function (paymentData)
   var schema = joi.object().required().keys({
     // Identifier of the shop, this value is provided to the merchant by Sips
     merchantId           : joi.string().optional().empty(),
-    interfaceVersion     : joi.string().optional().default('IR_WS_2.29'),
+    interfaceVersion     : joi.string().optional().default('IR_WS_2.31'),
     messageVersion       : joi.string().required().empty(),
     redirectionData      : joi.string().required(),
-    transactionReference : joi.string().required()
+    transactionReference : joi.string().optional(),
+    paResMessage         : joi.string().optional().empty()
   });
 
   // validate joi schema with the given file
