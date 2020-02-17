@@ -492,7 +492,7 @@ CreditCard.prototype.cardCheckEnrollment = function (paymentData) {
 
   // Call api module to make an request to atos
   this.api.process(this.config, 'checkout/cardCheckEnrollment', paymentData, 'cardCheckEnrollment',
-  true).then(function (value) {
+  false).then(function (value) {
 
     // resolve success
     deferred.resolve(value);
