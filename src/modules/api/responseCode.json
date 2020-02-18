@@ -254,5 +254,35 @@
       "code" : "99",
       "description"  : "Incident with initiator domain"
     }
+  ],
+  "holderAuthentResponseCode" : [
+    {
+      "code" : "00",
+      "description"  : "Porteur authentifié"
+    },
+    {
+      "code" : "01",
+      "description"  : "Porteur non authentifié"
+    },
+    {
+      "code" : "02",
+      "description"  : "Le processus d'authentification porteur ne peut d'être réalisé pour cause de problème technique sur l'ACS (TX.status = U dans le message PARes)"
+    },
+    {
+      "code" : "03",
+      "description"  : "La preuve de l'authentification du porteur est disponible"
+    },
+    {
+      "code" : "89",
+      "description"  : "La session a expiré"
+    },
+    {
+      "code" : "95",
+      "description"  : "La signature du message PARes est invalide"
+    },
+    {
+      "code" : "96",
+      "description"  : "Le message PARes est invalide"
+    }
   ]
 }

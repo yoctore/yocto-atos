@@ -113,9 +113,14 @@ removeCurrencyCode) {
                           'Receiving response with data below :',
                           (!_.isUndefined(body) ? utils.obj.inspect(body) : '') ].join(' '));
 
+      // Case for 3DSecure
+      var hasHolderAuthentResponseCode = _.has(body, 'holderAuthentResponseCode');
+
       // add test to check if all is ok for next process
       if (!error && response && _.has(response, 'statusCode') && response.statusCode === 200 &&
-      body.responseCode === '00') {
+      (body.responseCode === '00' && !hasHolderAuthentResponseCode) ||
+      (body.responseCode === '00' && hasHolderAuthentResponseCode &&
+      (body.holderAuthentResponseCode === '00' || body.holderAuthentResponseCode === '03'))) {
 
         // return with correct data
         deferred.resolve(body);
@@ -125,7 +130,9 @@ removeCurrencyCode) {
         if (!_.isUndefined(body) && !_.isUndefined(body.responseCode)) {
 
           // retrieve the Translation of error code
-          var translateCode = _.find(codeList.responseCode, { code : body.responseCode });
+          var translateCode = hasHolderAuthentResponseCode ?
+          _.find(codeList.holderAuthentResponseCode, { code : body.holderAuthentResponseCode }) :
+          _.find(codeList.responseCode, { code : body.responseCode });
 
           // merge the error code
           error = _.merge(body, _.isUndefined(translateCode) ? {} : {
