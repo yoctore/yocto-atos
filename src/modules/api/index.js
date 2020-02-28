@@ -115,12 +115,17 @@ removeCurrencyCode) {
 
       // Case for 3DSecure
       var hasHolderAuthentResponseCode = _.has(body, 'holderAuthentResponseCode');
+      var hasRedirectionStatusCode = _.has(body, 'redirectionStatusCode');
 
       // add test to check if all is ok for next process
       if (!error && response && _.has(response, 'statusCode') && response.statusCode === 200 &&
-      (body.responseCode === '00' && !hasHolderAuthentResponseCode) ||
+      (body.responseCode === '00' && !hasHolderAuthentResponseCode && !hasRedirectionStatusCode) ||
+
       (body.responseCode === '00' && hasHolderAuthentResponseCode &&
-      (body.holderAuthentResponseCode === '00' || body.holderAuthentResponseCode === '03'))) {
+      (body.holderAuthentResponseCode === '00' || body.holderAuthentResponseCode === '03')) || 
+
+      (body.responseCode === '00' && hasRedirectionStatusCode &&
+      body.redirectionStatusCode === '00')) {
 
         // return with correct data
         deferred.resolve(body);
@@ -133,6 +138,11 @@ removeCurrencyCode) {
           var translateCode = hasHolderAuthentResponseCode ?
           _.find(codeList.holderAuthentResponseCode, { code : body.holderAuthentResponseCode }) :
           _.find(codeList.responseCode, { code : body.responseCode });
+
+           // retrieve the Translation of error code
+          translateCode = hasRedirectionStatusCode ?
+          _.find(codeList.redirectionStatusCode, { code : body.redirectionStatusCode }) :
+          translateCode;
 
           // merge the error code
           error = _.merge(body, _.isUndefined(translateCode) ? {} : {

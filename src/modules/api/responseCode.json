@@ -284,5 +284,59 @@
       "code" : "96",
       "description"  : "Le message PARes est invalide"
     }
+  ],
+  "redirectionStatusCode" : [
+    {
+      "code" : "00",
+      "description"  : "Transaction Paypage initialisée / Carte enrollée Success"
+    },
+    {
+      "code" : "01",
+      "description"  : "Carte non enrôlée Failure"
+    },
+    {
+      "code" : "03",
+      "description"  : "Contrat commecrant invalide Failure"
+    },
+    {
+      "code" : "10",
+      "description"  : "Enrôlement de la carte n’a pas pu être défini Error"
+    },
+    {
+      "code" : "12",
+      "description"  : "Transaction invalide, vérifier les paramètres transférés dans la requête Failure"
+    },
+    {
+      "code" : "14",
+      "description"  : "Coordonnées du moyen de paiement invalides (ex: n° de carte) Failure"
+    },
+    {
+      "code" : "30",
+      "description"  : "Erreur de format Failure"
+    },
+    {
+      "code" : "34",
+      "description"  : "Suspicion de fraude, erreur signature Failure"
+    },
+    {
+      "code" : "80",
+      "description"  : "Erreur rencontrée lors de l’interrogation du DS Error"
+    },
+    {
+      "code" : "89",
+      "description"  : "Session MPI expirée Error"
+    },
+    {
+      "code" : "91",
+      "description"  : "Commerçant non configuré dans le MPI Error Config"
+    },
+    {
+      "code" : "94",
+      "description"  : "Transaction dupliquée : le transactionReference ou transactionId de la transaction a déjà été utilisé Failure"
+    },
+    {
+      "code" : "99",
+      "description"  : "Erreur interne"
+    }
   ]
 }

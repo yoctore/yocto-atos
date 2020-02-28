@@ -82,7 +82,7 @@ var paymentData = {
   // }
 };
 
-var transactionReference = '97abc2paapfa1f33a00420097';
+var transactionReference = '97abc2paapfa1f33a00420098';
 
 var captureData = {
   operationAmount       : 974,
@@ -102,7 +102,8 @@ var paymentData3DSecure = {
   captureMode : 'AUTHOR_CAPTURE',
   amount                : '974',
   merchantReturnUrl : 'http://localhost:3002',
-  cardNumber : '5017679400300100',
+  //cardNumber : '5017679400300100', // Carte OK enrollé
+  cardNumber : '5017679100900100', // Carte KO non enrollé
   cardExpiryDate        : '202112',
   cardCSCValue          : '985',
   panType : 'PAN',
@@ -162,18 +163,18 @@ var cardValidateAuthenticationAndOrder = {
 atos.loadConfig(config).then(function (value) {
  // console.log('===> success load, value is = ', paymentData3DSecure)
 
-  // atos.modules.creditCard.cardCheckEnrollment(paymentData3DSecure).then(function (value) {
-  //   console.log('\n===> success create auth payment, value is = ', value)
-  // }).catch(function (error) {
-  //   console.log('\n===> error, is = ', error)
-  // });
-  
-  atos.modules.creditCard.cardValidateAuthenticationAndOrder(cardValidateAuthenticationAndOrder)
-  .then(function (value) {
+  atos.modules.creditCard.cardCheckEnrollment(paymentData3DSecure).then(function (value) {
     console.log('\n===> success create auth payment, value is = ', value)
   }).catch(function (error) {
     console.log('\n===> error, is = ', error)
   });
+  
+  // atos.modules.creditCard.cardValidateAuthenticationAndOrder(cardValidateAuthenticationAndOrder)
+  // .then(function (value) {
+  //   console.log('\n===> success create auth payment, value is = ', value)
+  // }).catch(function (error) {
+  //   console.log('\n===> error, is = ', error)
+  // });
 
   // atos.modules.creditCard.capturePayment(captureData).then(function (value) {
   //   console.log('===> success create auth payment, value is = ', value)
